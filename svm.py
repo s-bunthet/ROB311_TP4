@@ -25,6 +25,12 @@ if args.train_size>train_data.shape[0]:
 else:
     train_size = args.train_size
 
+# TODO: 
+# 1) write function to plot the image with the corespond label   
+# 2) If we use the train data in total, it takes alot of time. There are twos possible idea of improvement 
+#    2.1) Use HOG filter. See: https://scikit-image.org/docs/dev/auto_examples/features_detection/plot_hog.html
+#    2.2) Reduce the size of the image. See: https://scikit-image.org/docs/dev/auto_examples/transform/plot_rescale.html
+
 
 def plot_confusion_matrix(confusion_matrix):
     labels = ["0","1","2","3","4","5","6","7","8","9"]
