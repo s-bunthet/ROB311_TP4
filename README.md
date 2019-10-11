@@ -3,7 +3,7 @@ Train MNIST data set with SVM.SVC from Sklearn
 
 **Note** 
 
-Download MNIST Dataset in zip file from this[link](https://www.kaggle.com/oddrationale/mnist-in-csv) (using the Download button).
+Download MNIST Dataset in zip file from this [link](https://www.kaggle.com/oddrationale/mnist-in-csv) (using the Download button).
 
 Extract the zip files containing the train and test dataset.
 
@@ -30,7 +30,7 @@ optional arguments:
                         The training set size. '-1' mean that we use all the
                         dataset
   --seed SEED           The random seed.
-  --no-plot             Plot the confusion matrix
+  --no-plot             Don't plot the confusion matrix
   --vb                  Turn on verbose
 
 ```
@@ -46,9 +46,7 @@ Basically, we train svm for every possible combination of `C`, `gamma`,`kernel` 
 
 In terminal, run :
 ```
-
 python hyperparameters_search.py
-
 ```
 
 ## Result
@@ -60,17 +58,24 @@ as a result, we find optimal hyperparameters:
 C: 10
 kernel: "rbf"
 gamma: "scale"
-
 ```
 with accuracy: `0.9692`.
 
 Finally, we train the whole data with:
 ```
-python svm.py --k rbf --c 10 --gamma scale --vb 
+python svm.py --k rbf --c 10 --gamma scale --vb --train-size -1 --vb
 ``` 
-#TODO
-We get the accuracy of: `0.`.
+
+We get the accuracy of: `0.9837`.
+
+Training time: 557.9313 seconds.
+
+Prediction time: 158.0967 seconds
+
+
 The corresponding confusion matrix:
+
+![](imgs/confusion_matrix.png)
 
 
 

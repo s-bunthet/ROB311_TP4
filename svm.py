@@ -8,13 +8,13 @@ import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description="Argument to train SVM")
 
-parser.add_argument("--c", type=float, default=1.0, help="penalty parameter of the error term" )
-parser.add_argument("--k", type=str, default="linear",  choices=["rbf","linear", "poly", "sigmoid"], help="Kernel type")
-parser.add_argument("--gamma", type=str, default="auto", choices=["auto","scale"], help="Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’")
+parser.add_argument("--c", type=float, default=10.0, help="penalty parameter of the error term" )
+parser.add_argument("--k", type=str, default="rbf",  choices=["rbf","linear", "poly", "sigmoid"], help="Kernel type")
+parser.add_argument("--gamma", type=str, default="scale", choices=["auto","scale"], help="Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’")
 parser.add_argument("--train-size", type=int, default=-1, help="The training set size. '-1' mean that we use all the dataset ")
 parser.add_argument("--seed", type=int, default=1, help="The random seed.")
-parser.add_argument("--no-plot", default=False, action="store_true",help="Plot the confusion matrix")
-parser.add_argument("--vb",default=False,action="store_true",help="Turn on verbose")
+parser.add_argument("--no-plot", default=False, action="store_true", help="Don't plot the confusion matrix")
+parser.add_argument("--vb", default=False,action="store_true",help="Turn on verbose")
 
 args = parser.parse_args()
 
@@ -23,9 +23,12 @@ args = parser.parse_args()
 train_data = pd.read_csv("data/mnist_train.csv").values
 test_data = pd.read_csv("data/mnist_test.csv").values
 
+# we shuffle the train and also test data since we might not use the whole data for training and testing. 
+# Shuffling make sure that the subset of the train or test data contain data with all labels.
 np.random.seed(args.seed)
 np.random.shuffle(train_data) 
-np.random.shuffle(test_data)
+np.random.shuffle(test_data)    
+ 
 
 
 if args.train_size>train_data.shape[0] or args.train_size ==-1:
@@ -33,19 +36,17 @@ if args.train_size>train_data.shape[0] or args.train_size ==-1:
 else:
     train_size = args.train_size
 
-test_size = int(train_size/4)
+test_size = int(train_size/4) # test with 20% of the size of train data 
 if test_size > test_data.shape[0]:
     test_size = test_data.shape[0]
 
-# TODO: 
-# 1) write function to plot the image with the corespond label   
-# 2) If we use the train data in total, it takes alot of time. There are twos possible idea of improvement 
-#    2.1) Use HOG filter. See: https://scikit-image.org/docs/dev/auto_examples/features_detection/plot_hog.html
-#    2.2) Reduce the size of the image. See: https://scikit-image.org/docs/dev/auto_examples/transform/plot_rescale.html
-# 3) Write hyperparameter testing python file   
-
 
 def plot_confusion_matrix(confusion_matrix):
+    """
+    Plot a confusion matrix.
+    :param confusion_matrix:
+    :return:
+    """
     labels = ["0","1","2","3","4","5","6","7","8","9"]
     fig, ax = plt.subplots()
     im = ax.imshow(confusion_matrix)
@@ -68,6 +69,10 @@ def plot_confusion_matrix(confusion_matrix):
 
 
 def train():
+    """
+    Train SVC (C-Support Vector Classification)
+    :return:
+    """
     # train 
     classifer = SVC(C=args.c, kernel=args.k, gamma=args.gamma, verbose=args.vb)
     start_training_time = time.time()
@@ -83,6 +88,8 @@ def train():
         for j in np.arange(10):
             if test_data[i][0] == j:
                 confusion_matrix[j][predicted_label]+=1
+    print("0", train_data.shape)
+    print("1", test_data.shape)
     print("Arguments used for training: ",args.__dict__)
     print('Prediction time: {0:.4f} seconds'.format(time.time()-start_prediction_time))
     # Accuracy 

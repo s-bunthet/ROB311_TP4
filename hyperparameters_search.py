@@ -1,5 +1,4 @@
 import subprocess
-import numpy as np 
 import re 
 from progress.bar import Bar
 from collections import OrderedDict
@@ -9,7 +8,13 @@ c_list = [0.01,0.1,1,10]
 kernel_list = ["rbf","linear", "poly", "sigmoid"]
 gamma_list = ["auto","scale"]
 
+
 def get_accuracy(process_output):
+    """
+    Extract the accuracy from the stdout of subprocess.
+    :param process_output:
+    :return: (float)
+    """
     process_output = process_output.decode("utf-8")
     acc = re.findall("\d+\.\d+",process_output)[-1]
     return float(acc)
