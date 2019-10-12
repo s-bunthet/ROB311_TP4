@@ -62,7 +62,7 @@ kernel: "rbf"
 gamma:  "scale"
 ```
 
-with accuracy: `0.9692`.
+with accuracy: `0.9427` (`0.9692` with 1000 training examples).
 
 Finally, we train the whole data with:
 
@@ -72,9 +72,9 @@ python svm.py --k rbf --c 10 --gamma scale --vb --train-size -1 --vb
 
 We get the accuracy of: `0.9837`.
 
-Training time: 557.9313 seconds.
+Training time: 557.9313 seconds (can be slightly different).
 
-Prediction time: 158.0967 seconds
+Prediction time: 158.0967 seconds (can be slightly different).
 
 The corresponding confusion matrix:
 

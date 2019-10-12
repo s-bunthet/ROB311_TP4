@@ -74,7 +74,7 @@ def train():
     :return:
     """
     # train 
-    classifer = SVC(C=args.c, kernel=args.k, gamma=args.gamma, verbose=args.vb)
+    classifer           = SVC(C=args.c, kernel=args.k, gamma=args.gamma, verbose=args.vb)
     start_training_time = time.time()
     classifer.fit(train_data[np.arange(train_size)][:,np.arange(1, train_data.shape[1])], train_data[np.arange(train_size)][:,0])
     print("\n================================")

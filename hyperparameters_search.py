@@ -23,12 +23,12 @@ def get_accuracy(process_output):
 if __name__ == "__main__":
     ags_acc_dict = OrderedDict()
     start_time   = time.time()
-    bar          = Bar('Searching Hyperparameters:', max=len(kernel_list)*len(gamma_list)*len(c_list))
+    bar          = Bar('Searching Hyperparameters: ', max=len(kernel_list)*len(gamma_list)*len(c_list))
     for c in c_list:
         for k in kernel_list:
             for gamma in gamma_list:
-                process_output = subprocess.check_output(["python", "svm.py", "--no-plot", "--train-size", str(1000), "--k",str(k), "--gamma", str(gamma), "--c", str(c)])
-                ags_acc_dict.update({"k: "+k+", "+"gamma: "+gamma+", "+"c: "+str(c): get_accuracy(process_output)})
+                process_output = subprocess.check_output(["python3", "svm.py", "--no-plot", "--train-size", str(3000), "--k", str(k), "--gamma", str(gamma), "--c", str(c)])
+                ags_acc_dict.update({"k: "+k+", gamma: "+gamma+", c: "+str(c): get_accuracy(process_output)})
                 bar.next()
     bar.finish()
     ags_acc_dict = OrderedDict(sorted(ags_acc_dict.items(), key=lambda t: t[1]))
