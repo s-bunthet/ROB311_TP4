@@ -8,20 +8,20 @@ import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description="Argument to train SVM")
 
-parser.add_argument("--c", type=float, default=10.0, help="penalty parameter of the error term" )
-parser.add_argument("--k", type=str, default="rbf",  choices=["rbf","linear", "poly", "sigmoid"], help="Kernel type")
-parser.add_argument("--gamma", type=str, default="scale", choices=["auto","scale"], help="Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’")
-parser.add_argument("--train-size", type=int, default=-1, help="The training set size. '-1' mean that we use all the dataset ")
-parser.add_argument("--seed", type=int, default=1, help="The random seed.")
-parser.add_argument("--no-plot", default=False, action="store_true", help="Don't plot the confusion matrix")
-parser.add_argument("--vb", default=False,action="store_true",help="Turn on verbose")
+parser.add_argument("--c",          type=float, default=10.0,                              help="penalty parameter of the error term" )
+parser.add_argument("--k",          type=str,   default="rbf",   choices=["rbf","linear", "poly", "sigmoid"], help="Kernel type")
+parser.add_argument("--gamma",      type=str,   default="scale", choices=["auto","scale"], help="Kernel coefficient for ‘rbf’, ‘poly’ and ‘sigmoid’")
+parser.add_argument("--train-size", type=int,   default=-1,                                help="The training set size. '-1' mean that we use all the dataset ")
+parser.add_argument("--seed",       type=int,   default=1,                                 help="The random seed.")
+parser.add_argument("--no-plot",                default=False,   action="store_true",      help="Don't plot the confusion matrix")
+parser.add_argument("--vb",                     default=False,   action="store_true",      help="Turn on verbose")
 
 args = parser.parse_args()
 
 
 # load train and test data set
 train_data = pd.read_csv("data/mnist_train.csv").values
-test_data = pd.read_csv("data/mnist_test.csv").values
+test_data  = pd.read_csv("data/mnist_test.csv").values
 
 # we shuffle the train and also test data since we might not use the whole data for training and testing. 
 # Shuffling make sure that the subset of the train or test data contain data with all labels.
@@ -47,9 +47,9 @@ def plot_confusion_matrix(confusion_matrix):
     :param confusion_matrix:
     :return:
     """
-    labels = ["0","1","2","3","4","5","6","7","8","9"]
+    labels  = ["0","1","2","3","4","5","6","7","8","9"]
     fig, ax = plt.subplots()
-    im = ax.imshow(confusion_matrix)
+    im      = ax.imshow(confusion_matrix)
 
     ax.set_xticks(np.arange(10))
     ax.set_yticks(np.arange(10))
@@ -82,7 +82,7 @@ def train():
 
     # build confusion matrix
     start_prediction_time = time.time()
-    confusion_matrix = np.zeros((10,10))
+    confusion_matrix      = np.zeros((10,10))
     for i in range(test_size):
         predicted_label = classifer.predict([test_data[i][np.arange(1, test_data.shape[1])]])
         for j in np.arange(10):
@@ -100,5 +100,4 @@ def train():
 
 
 if __name__ == "__main__":
-    train() 
-
+    train()

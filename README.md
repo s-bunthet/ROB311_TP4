@@ -1,23 +1,26 @@
 # ROB311_TP4
-Train MNIST data set with SVM.SVC from Sklearn
 
-**Note** 
+Train MNIST data set with SVM.SVC from Sklearn.
+
+## Download the data
 
 Download MNIST Dataset in zip file from this [link](https://www.kaggle.com/oddrationale/mnist-in-csv) (using the Download button).
 
 Extract the zip files containing the train and test dataset.
 
-In the current directory, create a folder ``data`` and put the two data sets in this folder. 
+In the current directory, create a folder ``data`` and put the two data sets in this folder.
+
 ## Train SVM
+
 To train the SVM by the default value of parameters, run:
 
+```bash
+python svm.py
 ```
 
-python svm.py 
-```
-These are the parameters that you can try different value:
+These are the parameters that can have different values:
 
-```
+```text
 Argument to train SVM
 
 optional arguments:
@@ -32,20 +35,19 @@ optional arguments:
   --seed SEED           The random seed.
   --no-plot             Don't plot the confusion matrix
   --vb                  Turn on verbose
-
 ```
-
 
 ## Hyperparameters search
 
-In SVM.SVC from Sklearn, there are three important hyperparameters:  `C`, `gamma`,`kernel`.
-Each hyperparameters belong to its list of possible values.
+In SVM.SVC from Sklearn, there are three important hyperparameters:  `C`, `gamma` and `kernel`.
+Each hyperparameters belongs to its list of possible values.
 
-We use `hyperparameters_search.py` to find which of the three parameters that give the best accuracy.
-Basically, we train svm for every possible combination of `C`, `gamma`,`kernel` of their list and we search for a set of {C, gamma, kernel} that maximize the accuracy.
+We use `hyperparameters_search.py` to find which of the three parameters gives the best accuracy.
+Basically, we train svm for every possible combination of `C`, `gamma`, `kernel` of their list and we search for a set of {C, gamma, kernel} that maximizes the accuracy.
 
 In terminal, run :
-```
+
+```bash
 python hyperparameters_search.py
 ```
 
@@ -54,17 +56,19 @@ python hyperparameters_search.py
 The size of training data is very large, so in hyperparameter searching, we use only 3000 training expample,
 as a result, we find optimal hyperparameters:
 
-```
-C: 10
+```text
+C:      10
 kernel: "rbf"
-gamma: "scale"
+gamma:  "scale"
 ```
+
 with accuracy: `0.9692`.
 
 Finally, we train the whole data with:
-```
+
+```bash
 python svm.py --k rbf --c 10 --gamma scale --vb --train-size -1 --vb
-``` 
+```
 
 We get the accuracy of: `0.9837`.
 
@@ -72,13 +76,6 @@ Training time: 557.9313 seconds.
 
 Prediction time: 158.0967 seconds
 
-
 The corresponding confusion matrix:
 
-![](imgs/confusion_matrix.png)
-
-
-
-
-
-
+![Alternate text](imgs/confusion_matrix.png)
