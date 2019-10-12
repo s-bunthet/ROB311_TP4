@@ -88,8 +88,6 @@ def train():
         for j in np.arange(10):
             if test_data[i][0] == j:
                 confusion_matrix[j][predicted_label]+=1
-    print("0", train_data.shape)
-    print("1", test_data.shape)
     print("Arguments used for training: ",args.__dict__)
     print('Prediction time: {0:.4f} seconds'.format(time.time()-start_prediction_time))
     # Accuracy 
